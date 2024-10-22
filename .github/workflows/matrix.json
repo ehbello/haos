@@ -60,6 +60,12 @@
     "label": "board/odroid"
   },
   {
+    "id": "pandaboard",
+    "defconfig": "pandaboard",
+    "architecture": "arm",
+    "label": "board/pandaboard"
+  },
+  {
     "id": "rpi2",
     "defconfig": "rpi2",
     "architecture": "arm",
