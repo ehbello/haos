@@ -22,7 +22,12 @@ HASSIO_CONTAINER_IMAGES_ARCH = supervisor dns audio cli multicast observer core
 
 define HASSIO_CONFIGURE_CMDS
 	# Deploy only landing page for "core" by setting version to "landingpage"
-	curl -s $(HASSIO_VERSION_URL)$(HASSIO_VERSION_CHANNEL)".json" | jq '.core = "landingpage"' > $(@D)/version.json
+	# If the board has a specific version.json file, use it to pin latest supported versions, otherwise use the default one
+	if [ -f "$(BOARD_DIR)/version.json" ]; then \
+		cat $(BOARD_DIR)/version.json | jq '.core = "landingpage"' > $(@D)/version.json; \
+	else \
+		curl -s $(HASSIO_VERSION_URL)$(HASSIO_VERSION_CHANNEL)".json" | jq '.core = "landingpage"' > $(@D)/version.json; \
+	fi
 endef
 
 define HASSIO_BUILD_CMDS
